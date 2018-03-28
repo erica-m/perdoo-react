@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Loop from 'lloop';
 
 // Import icons
 import iconAdd from './add.svg'
@@ -27,8 +28,8 @@ const Wrapper = styled.section`
   align-items: center;
 `;
 
-//Create a <User> react component that renders a <div>
-const User = styled.div`
+//Create a <UserWrap> react component that renders a <div>
+const UserWrap = styled.div`
   display: flex;
   align-items: center;
 
@@ -55,7 +56,7 @@ const UserList = styled.div `
   max-height: 150px;
   overflow: scroll;
 
-  > ${User} {
+  > ${UserWrap} {
     margin-bottom: 10px;
 
     &:last-child {
@@ -106,19 +107,30 @@ const Search = styled.div`
 `;
 /*-------------------------------------------------------------------------*/
 
-/* Functions---------------------------------------------------------------*/
-class UserBlock extends React.Component {
-  render() {
-    return (
-      <User>
-        <Avatar src={this.props.avatar} alt="user avatar"></Avatar>
-        <Name>{this.props.name}</Name>
-      </User>
-    );
-  }
-}
+/* Arrays------------------------------------------------------------------*/
+const users = [
+  { id: 1, name: 'Jessica Jones', imgUrl: 'https://randomuser.me/api/portraits/women/76.jpg' },
+  { id: 2, name: 'Luke Cage', imgUrl: 'https://randomuser.me/api/portraits/men/53.jpg' },
+  { id: 3, name: 'Matthew Murdock', imgUrl: 'https://randomuser.me/api/portraits/men/46.jpg' },
+  { id: 4, name: 'Elektra Natchios', imgUrl: 'https://randomuser.me/api/portraits/women/19.jpg' },
+  { id: 5, name: 'Trish Walker', imgUrl: 'https://randomuser.me/api/portraits/women/68.jpg' },
+  { id: 6, name: 'Franklin Nelson', imgUrl: 'https://randomuser.me/api/portraits/men/79.jpg' },
+  { id: 7, name: 'Claire Temple', imgUrl: 'https://randomuser.me/api/portraits/women/89.jpg' },
+  { id: 8, name: 'Daniel Rand', imgUrl: 'https://randomuser.me/api/portraits/men/62.jpg' },
+  { id: 9, name: 'Colleen Wing', imgUrl: 'https://randomuser.me/api/portraits/women/17.jpg' },
+];
 /*-------------------------------------------------------------------------*/
 
+/* Functions---------------------------------------------------------------*/
+const UserBlock = ({ name, imgUrl }) => (
+  <UserWrap>
+    <Avatar src={imgUrl} alt="user avatar"></Avatar>
+    <Name>{name}</Name>
+  </UserWrap>
+);
+/*-------------------------------------------------------------------------*/
+
+/* Render------------------------------------------------------------------*/
 class App extends Component {
   render() {
     return (
@@ -126,42 +138,9 @@ class App extends Component {
 
         <Popover>
           <UserList>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
-            <User>
-              <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-              <Name>Jessica Jones</Name>
-            </User>
+            <Loop items={users} primaryKey="name">
+              <UserBlock />
+            </Loop>
           </UserList>
           <Search>
             <Icon type="image/svg+xml" data={iconSearch}></Icon>
@@ -169,12 +148,13 @@ class App extends Component {
           </Search>
         </Popover>
 
-        <UserBlock active avatar="https://randomuser.me/api/portraits/women/9.jpg" name="Erica Schoonmaker" />
+        <UserBlock active imgUrl="https://randomuser.me/api/portraits/women/9.jpg" name="Erica Schoonmaker" />
         <Icon type="image/svg+xml" data={iconAdd}></Icon>
 
       </Wrapper>
     );
   }
 }
+/*-------------------------------------------------------------------------*/
 
 export default App;
