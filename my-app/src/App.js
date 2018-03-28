@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import iconAdd from './add.svg'
 import iconSearch from './search.svg'
 
+/* CSS---------------------------------------------------------------------*/
 // Create a <Icon> react component that renders a <object> for SVG icons
 const Icon = styled.object`
   width: 20px;
@@ -103,7 +104,20 @@ const Search = styled.div`
     margin-left: 4px;
   }
 `;
+/*-------------------------------------------------------------------------*/
 
+/* Functions---------------------------------------------------------------*/
+class UserBlock extends React.Component {
+  render() {
+    return (
+      <User>
+        <Avatar src={this.props.avatar} alt="user avatar"></Avatar>
+        <Name>{this.props.name}</Name>
+      </User>
+    );
+  }
+}
+/*-------------------------------------------------------------------------*/
 
 class App extends Component {
   render() {
@@ -155,10 +169,7 @@ class App extends Component {
           </Search>
         </Popover>
 
-        <User>
-          <Avatar src="https://randomuser.me/api/portraits/women/76.jpg"></Avatar>
-          <Name active>Jessica Jones</Name>
-        </User>
+        <UserBlock active avatar="https://randomuser.me/api/portraits/women/9.jpg" name="Erica Schoonmaker" />
         <Icon type="image/svg+xml" data={iconAdd}></Icon>
 
       </Wrapper>
