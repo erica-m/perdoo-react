@@ -26,6 +26,7 @@ const Wrapper = styled.section`
   padding: 15px 30px;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 //Create a <UserWrap> react component that renders a <div>
@@ -52,15 +53,19 @@ const Popover = styled.div`
 
 //Create a <UserList> react component that renders a <div>
 const UserList = styled.div`
-  padding: 10px 20px;
   max-height: 150px;
   overflow: scroll;
+  box-sizing: border-box;
 
   > ${UserWrap} {
-    margin-bottom: 10px;
+    padding: 5px 20px;
+
+    &:first-child {
+      padding-top: 10px;
+    }
 
     &:last-child {
-      margin-bottom: 0px;
+      padding-bottom: 10px;
     }
   }
 `;
@@ -76,7 +81,14 @@ const Avatar = styled.img`
 const Name = styled.div`
   margin: 0 8px;
   white-space: nowrap;
-  ${props => props.active && "font-weight: 600;"}
+  }
+
+  ${UserWrap}.active & {
+    font-weight: 600;
+  }
+
+  ${UserWrap}.active:hover & {
+    color: #3e4a59;
   }
 `;
 
@@ -84,10 +96,14 @@ const Name = styled.div`
 const SearchField = styled.input`
   height: 20px;
   border: 0;
+  padding: 0;
   font-family: "Proxima Nova", sans-serif;
   color: #3e4a59;
   font-size: 15px;
-  margin-left: 8px;
+  margin: 0 0 0 8px;
+  position: relative;
+  top: -2px;
+
 
   &:focus {
     outline: 0;
@@ -101,8 +117,9 @@ const Search = styled.div`
 
   > ${Icon} {
     position: relative;
-    top: 5px;
-    margin-left: 4px;
+    top: 6px;
+    width: 25px;
+    height: 25px;
   }
 `;
 /*-------------------------------------------------------------------------*/
@@ -183,7 +200,10 @@ class App extends Component {
     return (
       <Wrapper>
         {popover}
-        <UserBlock active imgUrl={selectedUser.imgUrl} name={selectedUser.name} onClick={this.openPopover} />
+        <UserWrap className="active" data-id={selectedUser.id} onClick={this.openPopover}>
+          <Avatar src={selectedUser.imgUrl} alt="user avatar" />
+          <Name>{selectedUser.name}</Name>
+        </UserWrap>
         <Icon type="image/svg+xml" data={iconAdd} />
       </Wrapper>
     );
