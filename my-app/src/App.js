@@ -132,19 +132,35 @@ const UserBlock = ({ name, imgUrl }) => (
 
 /* Render------------------------------------------------------------------*/
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      filter: ""
+    };
+
+    this.onFilterUpdate = event => {
+      this.setState({ filter: event.target.value });
+    };
+  }
+
+  filteredUsers() {
+    return users.filter(user => user.name.toLowerCase().indexOf(this.state.filter.toLowerCase()) >= 0);
+  }
+
   render() {
     return (
       <Wrapper>
 
         <Popover>
           <UserList>
-            <Loop items={users} primaryKey="name">
+            <Loop items={this.filteredUsers()} primaryKey="id">
               <UserBlock />
             </Loop>
           </UserList>
           <Search>
             <Icon type="image/svg+xml" data={iconSearch}></Icon>
-            <SearchField placeholder="Search People"></SearchField>
+            <SearchField placeholder="Search People" onChange={this.onFilterUpdate} ></SearchField>
           </Search>
         </Popover>
 
